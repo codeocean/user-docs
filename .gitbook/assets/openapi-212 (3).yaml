@@ -1,0 +1,2580 @@
+openapi: 3.0.3
+info:
+  description: Code Ocean API
+  title: Code Ocean API
+  version: 2021-09-09
+servers:
+- url: http://localhost:8400/api/v1
+security:
+- BasicAuth: []
+paths:
+  /capsules/{capsule_id}:
+    get:
+      operationId: GetCapsuleByID
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: capsule_id
+        required: true
+        schema:
+          pattern: "^[a-zA-Z0-9-]$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Capsule'
+          description: A capsule.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Get capsule by ID.
+      tags:
+      - capsules
+  /capsules/{capsule_id}/computations:
+    get:
+      operationId: GetCapsuleComputations
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: capsule_id
+        required: true
+        schema:
+          pattern: "^[a-zA-Z0-9-]$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Computation'
+                type: array
+          description: Capsule computations.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Get capsule computations.
+      tags:
+      - capsules
+  /capsules/{capsule_id}/permissions:
+    post:
+      operationId: UpdateCapsulePermissions
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: capsule_id
+        required: true
+        schema:
+          pattern: "^[a-zA-Z0-9-]$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Permissions'
+        description: Capsule permissions to add/update.
+        required: true
+      responses:
+        "204":
+          description: No content.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Update a capsule's permissions.
+      tags:
+      - capsules
+  /computations:
+    post:
+      operationId: RunCapsule
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunParams'
+        description: Run params.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Computation'
+          description: The new computation.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "429":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Too many runs
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Run a capsule.
+      tags:
+      - computations
+  /computations/{computation_id}:
+    get:
+      operationId: GetComputationByID
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: computation_id
+        required: true
+        schema:
+          pattern: "^[a-zA-Z0-9-]$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Computation'
+          description: The computation.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Get computation by ID.
+      tags:
+      - computations
+  /computations/{computation_id}/results:
+    post:
+      operationId: ListComputationResults
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: computation_id
+        required: true
+        schema:
+          pattern: "^[a-zA-Z0-9-]$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListFolderParams'
+        description: List folder params.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+          description: A result folder.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: List computation results.
+      tags:
+      - computations
+  /computations/{computation_id}/results/download_url:
+    get:
+      operationId: GetComputationResultFileDownloadURL
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: computation_id
+        required: true
+        schema:
+          pattern: "^[a-zA-Z0-9-]$"
+          type: string
+        style: simple
+      - description: A path to a file.
+        explode: true
+        in: query
+        name: path
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadFileURL'
+          description: A URL to a file.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Get computation result file download URL.
+      tags:
+      - computations
+  /data_assets/{data_asset_id}:
+    delete:
+      operationId: DeleteDataAsset
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: data_asset_id
+        required: true
+        schema:
+          pattern: "^[a-zA-Z0-9-]$"
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No content.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Delete a data asset.
+      tags:
+      - data-assets
+    get:
+      operationId: GetDataAssetByID
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: data_asset_id
+        required: true
+        schema:
+          pattern: "^[a-zA-Z0-9-]$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataAsset'
+          description: A data asset.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Get data asset by ID.
+      tags:
+      - data-assets
+    put:
+      operationId: UpdateDataAssetMetadata
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: data_asset_id
+        required: true
+        schema:
+          pattern: "^[a-zA-Z0-9-]$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataAssetUpdateParams'
+        description: Data asset update params.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataAsset'
+          description: The updated data asset.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Update a data asset's metadata.
+      tags:
+      - data-assets
+  /data_assets/{data_asset_id}/archive:
+    patch:
+      operationId: ArchiveDataAsset
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: data_asset_id
+        required: true
+        schema:
+          pattern: "^[a-zA-Z0-9-]$"
+          type: string
+        style: simple
+      - explode: false
+        in: query
+        name: archive
+        required: false
+        schema:
+          type: boolean
+        style: simple
+      responses:
+        "202":
+          description: Accepted.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Archive/Unarchive a data asset.
+      tags:
+      - data-assets
+  /data_assets:
+    get:
+      operationId: SearchDataAssets
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - in: query
+        name: start
+        schema:
+          type: integer
+        style: simple
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        style: simple
+      - in: query
+        name: sort_order
+        schema:
+          $ref: '#/components/schemas/SortOrder'
+        style: simple
+      - explode: true
+        in: query
+        name: sort_field
+        required: false
+        schema:
+          $ref: '#/components/schemas/DataAssetSortBy'
+        style: form
+      - allowReserved: true
+        explode: false
+        in: query
+        name: query
+        required: false
+        schema:
+          type: string
+        style: spaceDelimited
+      - explode: false
+        in: query
+        name: type
+        required: false
+        schema:
+          $ref: '#/components/schemas/DataAssetType'
+        style: simple
+      - explode: false
+        in: query
+        name: ownership
+        required: false
+        schema:
+          $ref: '#/components/schemas/DataAssetOwnership'
+        style: simple
+      - explode: false
+        in: query
+        name: favorite
+        required: false
+        schema:
+          type: boolean
+        style: simple
+      - explode: false
+        in: query
+        name: archived
+        required: false
+        schema:
+          type: boolean
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataAssetSearchResults'
+          description: Data asset search results.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Search data assets.
+      tags:
+      - data-assets
+    post:
+      operationId: CreateDataAsset
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataAssetParams'
+        description: Data asset params.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataAsset'
+          description: The new data asset.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Create a data asset.
+      tags:
+      - data-assets
+  /data_assets/search:
+    post:
+      operationId: NewSearchDataAsset
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataAssetSearchParams'
+        description: Data asset search params.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataAssetSearchResults'
+          description: Data asset search results.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: search data assets - new API
+      tags:
+      - data-assets
+  /data_assets/{data_asset_id}/permissions:
+    post:
+      operationId: UpdateDataAssetPermissions
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: data_asset_id
+        required: true
+        schema:
+          pattern: "^[a-zA-Z0-9-]$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Permissions'
+        description: Data asset permissions to add/update.
+        required: true
+      responses:
+        "204":
+          description: No content.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Update a data asset's permissions.
+      tags:
+      - data-assets
+  /pipelines/{pipeline_id}:
+    get:
+      operationId: GetPipelineByID
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: pipeline_id
+        required: true
+        schema:
+          pattern: "^[a-zA-Z0-9-]$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Capsule'
+          description: A pipeline.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Get pipeline by ID.
+      tags:
+      - pipelines
+  /pipelines/{pipeline_id}/computations:
+    get:
+      operationId: GetPipelineComputations
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: pipeline_id
+        required: true
+        schema:
+          pattern: "^[a-zA-Z0-9-]$"
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Computation'
+                type: array
+          description: Pipeline computations.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Get pipeline computations.
+      tags:
+      - pipelines
+  /pipelines/{pipeline_id}/permissions:
+    post:
+      operationId: UpdatePipelinePermissions
+      parameters:
+      - explode: false
+        in: header
+        name: Accept-Version
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: pipeline_id
+        required: true
+        schema:
+          pattern: "^[a-zA-Z0-9-]$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Permissions'
+        description: Pipeline permissions to add/update.
+        required: true
+      responses:
+        "204":
+          description: No content.
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not found
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal error
+          headers:
+            Request-ID:
+              $ref: '#/components/headers/RequestID'
+            API-Version:
+              $ref: '#/components/headers/APIVersion'
+      summary: Update a pipeline's permissions.
+      tags:
+      - pipelines
+components:
+  headers:
+    RequestID:
+      schema:
+        type: string
+    APIVersion:
+      schema:
+        type: string
+  parameters:
+    SearchStart:
+      in: query
+      name: start
+      schema:
+        type: integer
+      style: simple
+    SearchLimit:
+      in: query
+      name: limit
+      schema:
+        type: integer
+      style: simple
+    SearchSortOrder:
+      in: query
+      name: sort_order
+      schema:
+        $ref: '#/components/schemas/SortOrder'
+      style: simple
+  responses:
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request
+      headers:
+        Request-ID:
+          $ref: '#/components/headers/RequestID'
+        API-Version:
+          $ref: '#/components/headers/APIVersion'
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized
+      headers:
+        Request-ID:
+          $ref: '#/components/headers/RequestID'
+        API-Version:
+          $ref: '#/components/headers/APIVersion'
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found
+      headers:
+        Request-ID:
+          $ref: '#/components/headers/RequestID'
+        API-Version:
+          $ref: '#/components/headers/APIVersion'
+    InternalError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal error
+      headers:
+        Request-ID:
+          $ref: '#/components/headers/RequestID'
+        API-Version:
+          $ref: '#/components/headers/APIVersion'
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden
+      headers:
+        Request-ID:
+          $ref: '#/components/headers/RequestID'
+        API-Version:
+          $ref: '#/components/headers/APIVersion'
+    TooManyRequests:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Too many runs
+      headers:
+        Request-ID:
+          $ref: '#/components/headers/RequestID'
+        API-Version:
+          $ref: '#/components/headers/APIVersion'
+  schemas:
+    Capsule:
+      example:
+        owner: owner
+        keywords:
+        - keywords
+        - keywords
+        created: 0
+        cloned_from_url: cloned_from_url
+        original_capsule:
+          major_version: 6
+          public: true
+          created: 5
+          name: name
+          id: id
+          minor_version: 1
+        description: description
+        published_capsule: published_capsule
+        article:
+          citation: citation
+          publish_time: 2
+          name: name
+          journal_name: journal_name
+          id: id
+          state: null
+          url: url
+          doi: doi
+        field: field
+        versions:
+        - major_version: 7
+          publish_time: 3
+          minor_version: 9
+          doi: doi
+        - major_version: 7
+          publish_time: 3
+          minor_version: 9
+          doi: doi
+        name: name
+        submission:
+          verified_timestamp: 2
+          commit: commit
+          verified: true
+          timestamp: 5
+          verification_capsule: verification_capsule
+        id: id
+        slug: slug
+        status: non_published
+      properties:
+        id:
+          type: string
+        created:
+          format: int64
+          type: integer
+        name:
+          type: string
+        status:
+          enum:
+          - non_published
+          - submitted
+          - publishing
+          - published
+          - verified
+          type: string
+        owner:
+          type: string
+        slug:
+          type: string
+        original_capsule:
+          $ref: '#/components/schemas/OriginalInfo'
+        published_capsule:
+          type: string
+        submission:
+          $ref: '#/components/schemas/Submission'
+        versions:
+          items:
+            $ref: '#/components/schemas/Version'
+          type: array
+        description:
+          type: string
+        field:
+          type: string
+        keywords:
+          items:
+            type: string
+          type: array
+        article:
+          $ref: '#/components/schemas/Article'
+        cloned_from_url:
+          type: string
+      required:
+      - created
+      - id
+      - name
+      - owner
+      - slug
+      - status
+      type: object
+    OriginalInfo:
+      example:
+        major_version: 6
+        public: true
+        created: 5
+        name: name
+        id: id
+        minor_version: 1
+      properties:
+        id:
+          type: string
+        major_version:
+          type: integer
+        minor_version:
+          type: integer
+        name:
+          type: string
+        created:
+          format: int64
+          type: integer
+        public:
+          type: boolean
+      type: object
+    Submission:
+      example:
+        verified_timestamp: 2
+        commit: commit
+        verified: true
+        timestamp: 5
+        verification_capsule: verification_capsule
+      properties:
+        timestamp:
+          format: int64
+          type: integer
+        commit:
+          type: string
+        verification_capsule:
+          type: string
+        verified:
+          type: boolean
+        verified_timestamp:
+          format: int64
+          type: integer
+      type: object
+    Version:
+      example:
+        major_version: 7
+        publish_time: 3
+        minor_version: 9
+        doi: doi
+      properties:
+        major_version:
+          type: integer
+        minor_version:
+          type: integer
+        publish_time:
+          format: int64
+          type: integer
+        doi:
+          type: string
+      required:
+      - major_version
+      - minor_version
+      - publish_time
+      type: object
+    Article:
+      example:
+        citation: citation
+        publish_time: 2
+        name: name
+        journal_name: journal_name
+        id: id
+        state: null
+        url: url
+        doi: doi
+      properties:
+        url:
+          type: string
+        id:
+          type: string
+        doi:
+          type: string
+        citation:
+          type: string
+        state:
+          $ref: '#/components/schemas/ArticleState'
+        name:
+          type: string
+        journal_name:
+          type: string
+        publish_time:
+          format: int64
+          type: integer
+      type: object
+    ArticleState:
+      enum:
+      - in_review
+      - published
+      type: string
+    Error:
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      type: object
+    Computation:
+      example:
+        end_status: null
+        run_time: 6
+        has_results: true
+        created: 0
+        cloud_workstation: true
+        name: name
+        id: id
+        state: null
+        parameters:
+        - name: name
+          value: value
+        - name: name
+          value: value
+      properties:
+        id:
+          type: string
+        created:
+          format: int64
+          type: integer
+        name:
+          type: string
+        run_time:
+          type: integer
+        cloud_workstation:
+          type: boolean
+        parameters:
+          items:
+            $ref: '#/components/schemas/Param'
+          type: array
+        state:
+          $ref: '#/components/schemas/ComputationState'
+        end_status:
+          $ref: '#/components/schemas/ComputationEndStatus'
+        has_results:
+          type: boolean
+      required:
+      - created
+      - id
+      - run_time
+      - state
+      type: object
+    Param:
+      example:
+        name: name
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      type: object
+    ComputationState:
+      enum:
+      - initializing
+      - running
+      - finalizing
+      - completed
+      type: string
+    ComputationEndStatus:
+      enum:
+      - stopped
+      - failed
+      - succeeded
+      type: string
+    Permissions:
+      example:
+        everyone: null
+        groups:
+        - role: null
+          group: group
+        - role: null
+          group: group
+        users:
+        - role: null
+          email: email
+        - role: null
+          email: email
+      properties:
+        users:
+          items:
+            $ref: '#/components/schemas/UserPermissions'
+          type: array
+        groups:
+          items:
+            $ref: '#/components/schemas/GroupPermissions'
+          type: array
+        everyone:
+          $ref: '#/components/schemas/EveryoneRole'
+      type: object
+    UserPermissions:
+      example:
+        role: null
+        email: email
+      properties:
+        email:
+          type: string
+        role:
+          $ref: '#/components/schemas/Role'
+      type: object
+    Role:
+      enum:
+      - owner
+      - editor
+      - viewer
+      type: string
+    GroupPermissions:
+      example:
+        role: null
+        group: group
+      properties:
+        group:
+          type: string
+        role:
+          $ref: '#/components/schemas/Role'
+      type: object
+    EveryoneRole:
+      enum:
+      - viewer
+      - none
+      type: string
+    RunParams:
+      example:
+        capsule_id: capsule_id
+        resume_run_id: resume_run_id
+        data_assets:
+        - id: id
+          mount: mount
+        - id: id
+          mount: mount
+        pipeline_id: pipeline_id
+        version: 0
+        parameters:
+        - parameters
+        - parameters
+      properties:
+        capsule_id:
+          type: string
+        pipeline_id:
+          type: string
+        version:
+          type: integer
+        resume_run_id:
+          type: string
+        parameters:
+          items:
+            type: string
+          type: array
+        data_assets:
+          items:
+            $ref: '#/components/schemas/DataAssetsRunParam'
+          type: array
+      type: object
+    DataAssetsRunParam:
+      example:
+        id: id
+        mount: mount
+      properties:
+        id:
+          type: string
+        mount:
+          type: string
+      required:
+      - id
+      - mount
+      type: object
+    ListFolderParams:
+      example:
+        path: path
+      properties:
+        path:
+          type: string
+      type: object
+    Folder:
+      example:
+        items:
+        - path: path
+          size: 0
+          name: name
+          type: null
+        - path: path
+          size: 0
+          name: name
+          type: null
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/FolderItem'
+          type: array
+      required:
+      - items
+      type: object
+    FolderItem:
+      example:
+        path: path
+        size: 0
+        name: name
+        type: null
+      properties:
+        name:
+          type: string
+        path:
+          type: string
+        type:
+          $ref: '#/components/schemas/FolderItemType'
+        size:
+          format: int64
+          type: integer
+      required:
+      - name
+      - path
+      - type
+      type: object
+    FolderItemType:
+      enum:
+      - file
+      - folder
+      type: string
+    DownloadFileURL:
+      example:
+        url: https://openapi-generator.tech
+      properties:
+        url:
+          format: uri
+          type: string
+      required:
+      - url
+      type: object
+    DataAsset:
+      example:
+        app_parameters:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        created: 0
+        last_used: 5
+        description: description
+        type: null
+        sourceBucket:
+          bucket: bucket
+          prefix: prefix
+          origin: null
+        custom_metadata:
+          key: ""
+        tags:
+        - tags
+        - tags
+        provenance:
+          capsule: capsule
+          data_assets:
+          - data_assets
+          - data_assets
+          commit: commit
+          run_script: run_script
+          docker_image: docker_image
+        size: 1
+        failureReason: failureReason
+        name: name
+        files: 6
+        id: id
+        state: null
+      properties:
+        id:
+          type: string
+        created:
+          format: int64
+          type: integer
+        name:
+          type: string
+        files:
+          format: int64
+          type: integer
+        size:
+          format: int64
+          type: integer
+        description:
+          type: string
+        last_used:
+          format: int64
+          type: integer
+        tags:
+          items:
+            type: string
+          type: array
+        state:
+          $ref: '#/components/schemas/DataAssetState'
+        failureReason:
+          type: string
+        type:
+          $ref: '#/components/schemas/DataAssetType'
+        provenance:
+          $ref: '#/components/schemas/Provenance'
+        sourceBucket:
+          $ref: '#/components/schemas/SourceBucket'
+        custom_metadata:
+          additionalProperties: {}
+          type: object
+        app_parameters:
+          items:
+            $ref: '#/components/schemas/AppParameter'
+          type: array
+      required:
+      - created
+      - id
+      - last_used
+      - name
+      - state
+      - type
+      type: object
+    DataAssetState:
+      enum:
+      - draft
+      - ready
+      - failed
+      type: string
+    DataAssetType:
+      enum:
+      - dataset
+      - result
+      type: string
+    Provenance:
+      example:
+        capsule: capsule
+        data_assets:
+        - data_assets
+        - data_assets
+        commit: commit
+        run_script: run_script
+        docker_image: docker_image
+      properties:
+        commit:
+          type: string
+        run_script:
+          type: string
+        data_assets:
+          items:
+            type: string
+          type: array
+        docker_image:
+          type: string
+        capsule:
+          type: string
+      type: object
+    SourceBucket:
+      example:
+        bucket: bucket
+        prefix: prefix
+        origin: null
+      properties:
+        origin:
+          $ref: '#/components/schemas/DataAssetOrigin'
+        bucket:
+          type: string
+        prefix:
+          type: string
+      required:
+      - origin
+      type: object
+    DataAssetOrigin:
+      enum:
+      - local
+      - aws
+      - gcp
+      type: string
+    CustomMetadata:
+      additionalProperties: {}
+      type: object
+    AppParameter:
+      example:
+        name: name
+        value: value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      type: object
+    DataAssetUpdateParams:
+      example:
+        name: name
+        description: description
+        mount: mount
+        custom_metadata:
+          key: ""
+        tags:
+        - tags
+        - tags
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        mount:
+          type: string
+        custom_metadata:
+          additionalProperties: {}
+          type: object
+      type: object
+    SortOrder:
+      enum:
+      - asc
+      - desc
+      type: string
+    DataAssetSortBy:
+      enum:
+      - created
+      - type
+      - name
+      - size
+      type: string
+    DataAssetOwnership:
+      enum:
+      - private
+      - shared
+      - created
+      type: string
+    DataAssetSearchResults:
+      example:
+        has_more: true
+        results:
+        - app_parameters:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          created: 0
+          last_used: 5
+          description: description
+          type: null
+          sourceBucket:
+            bucket: bucket
+            prefix: prefix
+            origin: null
+          custom_metadata:
+            key: ""
+          tags:
+          - tags
+          - tags
+          provenance:
+            capsule: capsule
+            data_assets:
+            - data_assets
+            - data_assets
+            commit: commit
+            run_script: run_script
+            docker_image: docker_image
+          size: 1
+          failureReason: failureReason
+          name: name
+          files: 6
+          id: id
+          state: null
+        - app_parameters:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          created: 0
+          last_used: 5
+          description: description
+          type: null
+          sourceBucket:
+            bucket: bucket
+            prefix: prefix
+            origin: null
+          custom_metadata:
+            key: ""
+          tags:
+          - tags
+          - tags
+          provenance:
+            capsule: capsule
+            data_assets:
+            - data_assets
+            - data_assets
+            commit: commit
+            run_script: run_script
+            docker_image: docker_image
+          size: 1
+          failureReason: failureReason
+          name: name
+          files: 6
+          id: id
+          state: null
+      properties:
+        has_more:
+          type: boolean
+        results:
+          items:
+            $ref: '#/components/schemas/DataAsset'
+          type: array
+      required:
+      - has_more
+      - results
+      type: object
+    DataAssetParams:
+      example:
+        name: name
+        description: description
+        source:
+          gcp:
+            bucket: bucket
+            prefix: prefix
+            client_secret: client_secret
+            client_id: client_id
+          aws:
+            access_key_id: access_key_id
+            bucket: bucket
+            keep_on_external_storage: true
+            prefix: prefix
+            index_data: true
+            secret_access_key: secret_access_key
+          computation:
+            id: id
+        mount: mount
+        custom_metadata:
+          key: ""
+        tags:
+        - tags
+        - tags
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        mount:
+          type: string
+        source:
+          $ref: '#/components/schemas/Source'
+        custom_metadata:
+          additionalProperties: {}
+          type: object
+      required:
+      - mount
+      - name
+      - tags
+      type: object
+    Source:
+      example:
+        gcp:
+          bucket: bucket
+          prefix: prefix
+          client_secret: client_secret
+          client_id: client_id
+        aws:
+          access_key_id: access_key_id
+          bucket: bucket
+          keep_on_external_storage: true
+          prefix: prefix
+          index_data: true
+          secret_access_key: secret_access_key
+        computation:
+          id: id
+      properties:
+        aws:
+          $ref: '#/components/schemas/AWSS3'
+        gcp:
+          $ref: '#/components/schemas/GCPCloudStorage'
+        computation:
+          $ref: '#/components/schemas/ComputationSource'
+      type: object
+    AWSS3:
+      example:
+        access_key_id: access_key_id
+        bucket: bucket
+        keep_on_external_storage: true
+        prefix: prefix
+        index_data: true
+        secret_access_key: secret_access_key
+      properties:
+        access_key_id:
+          type: string
+        secret_access_key:
+          type: string
+        bucket:
+          type: string
+        prefix:
+          type: string
+        keep_on_external_storage:
+          type: boolean
+        index_data:
+          type: boolean
+      required:
+      - bucket
+      type: object
+    GCPCloudStorage:
+      example:
+        bucket: bucket
+        prefix: prefix
+        client_secret: client_secret
+        client_id: client_id
+      properties:
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        bucket:
+          type: string
+        prefix:
+          type: string
+      required:
+      - bucket
+      type: object
+    ComputationSource:
+      example:
+        id: id
+      properties:
+        id:
+          type: string
+      required:
+      - id
+      type: object
+    DataAssetSearchParams:
+      example:
+        archived: true
+        offset: 0
+        sort_field: null
+        ownership: null
+        query: query
+        origin: null
+        limit: 6
+        filters:
+        - values:
+          - ""
+          - ""
+          range:
+            min: ""
+            max: ""
+          exclude: true
+          value: ""
+          key: key
+        - values:
+          - ""
+          - ""
+          range:
+            min: ""
+            max: ""
+          exclude: true
+          value: ""
+          key: key
+        type: null
+        sort_order: ""
+        favorite: true
+      properties:
+        query:
+          type: string
+        offset:
+          type: integer
+        limit:
+          type: integer
+        sort_field:
+          $ref: '#/components/schemas/DataAssetSortBy'
+        sort_order:
+          type: '#/SortOrder'
+        type:
+          $ref: '#/components/schemas/DataAssetType'
+        ownership:
+          $ref: '#/components/schemas/DataAssetOwnership'
+        origin:
+          $ref: '#/components/schemas/DataAssetSearchOrigin'
+        favorite:
+          type: boolean
+        archived:
+          type: boolean
+        filters:
+          items:
+            $ref: '#/components/schemas/SearchFilter'
+          type: array
+      required:
+      - archived
+      - favorite
+      - limit
+      - offset
+      type: object
+    DataAssetSearchOrigin:
+      enum:
+      - internal
+      - external
+      type: string
+    SearchFilter:
+      example:
+        values:
+        - ""
+        - ""
+        range:
+          min: ""
+          max: ""
+        exclude: true
+        value: ""
+        key: key
+      properties:
+        key:
+          type: string
+        value: {}
+        values:
+          items: {}
+          type: array
+        range:
+          $ref: '#/components/schemas/SearchFilter_range'
+        exclude:
+          type: boolean
+      required:
+      - exclude
+      - key
+      type: object
+    SearchFilter_range:
+      example:
+        min: ""
+        max: ""
+      properties:
+        min:
+          type: float64
+        max:
+          type: float64
+      type: object
