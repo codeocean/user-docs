@@ -9,18 +9,17 @@ metaLinks:
 
 ## Attaching a Secret to a Capsule
 
-1. Click on **environment** to display the Environment editor in a Capsule.
-2. Scroll down to see the Secrets section.
-3. Click **+ Add secret to Capsule**, and a drop-down menu that contains the secret list from your account settings page will appear.
-4. Select the type of credential you wish to add from the dropdown.
-5. Select the secret you wish to attach from the dropdown.
+1. Click the gear icon <img src="../../.gitbook/assets/gear_icon_v42.png" alt="" data-size="line"> in the top right of the Capsule UI.
+2. On the **Credentials** tab, click **+ Add secret to Capsule** to reveal a drop-down menu that contains the secret list [from your account settings page](https://app.gitbook.com/o/-MFlla4BKtMCc25E_JLC/s/ZLIBL09vk32pqP9geFZr/~/edit/~/changes/8/compute-capsule-basics/secret-management-guide/adding-editing-a-secret-in-the-account-settings-page).
+3. Select the type of credential you wish to add from the dropdown.
+4. Select the secret you wish to attach from the dropdown.
 
-![](<../../.gitbook/assets/ezgif.com-gif-maker (3).gif>)
+![](../../.gitbook/assets/secret_gif.gif)
 
 {% hint style="info" %}
-If there are no secrets configured on your account page, the + **Attach secret to Capsule** button will be disabled with a reminder message below. To attach the secret, you must [set up your secret in the account settings page first](adding-editing-a-secret-in-the-account-settings-page.md).&#x20;
+If there are no secrets configured on your account page, the + **Attach secret to Capsule** button will be disabled with a reminder message to first [set up your secret in the account settings page](adding-editing-a-secret-in-the-account-settings-page.md).
 
-<img src="../../.gitbook/assets/[Access secret in capsule] attaching secret to capsule - button disabled.png" alt="" data-size="original">
+<p align="center"><img src="../../.gitbook/assets/attach_secrets.png" alt="" data-size="original"></p>
 {% endhint %}
 
 ### Automated Implementation of AWS Credentials in Capsules
@@ -29,9 +28,9 @@ When accessing an external Data Asset created from a private S3 bucket during a 
 
 ### Edit the Title of the Attached Secret
 
-After you selected the secret, you can verify the secret type and the secret's title in the drop-down menu and the secret's title above it. The secret's title is the same as its name by default. To edit the title, click on the pencil icon. &#x20;
+After you selected the secret, you can verify the secret type and the secret's title in the drop-down menu and the secret's title above it. The secret's title is the same as its name by default. To edit the title, click on the pencil icon.
 
-<figure><img src="../../.gitbook/assets/Accessing a Secret in a Capsule - Edit the Title of the Attached Secret (1).gif" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/edit_secret_gif.gif" alt=""><figcaption></figcaption></figure>
 
 {% hint style="info" %}
 When sharing a Capsule with other users, the secret's title should help them to easily identify and pick the right secret to use in the Capsule.
@@ -52,7 +51,7 @@ The content depends on the secret's type and is associated with the required fie
 * **description**: the secret's title for identification on the environment page.
 * **specific fields**: depend on the secret's type.
 
-Here are example screenshots of each type of secret:
+Below are example screenshots of each type of secret:
 
 {% tabs %}
 {% tab title="AWS" %}
@@ -81,20 +80,20 @@ If you attach a few secrets of the same type, a number will be added to the spec
 
 Here is an example of two custom keys:
 
-![](<../../.gitbook/assets/6 duplicate key.png>)
+<p align="center"><img src="../../.gitbook/assets/6 duplicate key.png" alt=""></p>
 {% endhint %}
 
 If your application requires specific variable names for your secrets, they can be edited in the `environment.yml` file, which will change the names to which the secrets are copied over from the default names.
 
-If your Capsule has a `secrets.json` file, click **Set Environment Variable Names** in the secret's actions menu to edit these names.&#x20;
+If your Capsule has a `secrets.json` file, click **Set Environment Variable Names** in the secret's actions menu to edit these names.
 
-<figure><img src="../../.gitbook/assets/TorchDrug (2).gif" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/set_secret_name_gif.gif" alt=""><figcaption></figcaption></figure>
 
 ### Using a Secret in Script
 
 After you attach a secret in the Capsule, the system will save the encrypted secret. When you run the Capsule, the secret will be set as an environment variable in the computation. To visualize this, you can print out your secret in the script by retrieving the environment variable.
 
-Different programming languages have different commands to retrieve the environment variable. Below are examples of calling a custom key in Bash (run script), Python, and R. In this example, we added a custom secret to the Capsule. The value is `demo`, and it is saved in the `CUSTOM_KEY` environment variable.
+Different programming languages have different commands to retrieve the environment variable. Below are examples of calling a custom key in Bash (run script), Python, and R. In this example, a Custom Key secret has been added to the Capsule. The value is `demo`, and it is saved in the `CUSTOM_KEY` environment variable.
 
 {% tabs %}
 {% tab title="Bash (run script)" %}
@@ -126,7 +125,7 @@ Printing out secrets is not usually a good practice. The code in this section is
 
 ## Using a Secret during Build Time
 
-User Secrets (AWS Cloud Credentials, Database Credentials, API Credentials, and Custom Keys) are available during environment builds with the values accessible in the Dockerfile and postInstall under their typical environment variable names.&#x20;
+User Secrets (AWS Cloud Credentials, Database Credentials, API Credentials, and Custom Keys) are available during environment builds with the values accessible in the Dockerfile and postInstall under their typical environment variable names.
 
 {% hint style="info" %}
 Note: To make secrets available at build time, make sure to commit changes in your Capsule before attaching the secrets.
