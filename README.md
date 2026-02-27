@@ -1,8 +1,3 @@
----
-metaLinks:
-  alternates:
-    - https://app.gitbook.com/s/PvA82xvbvyt7rVs0IKXN/
----
 
 # Welcome to Code Ocean
 
